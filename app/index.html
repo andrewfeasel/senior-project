@@ -6,9 +6,26 @@
 	<title>Chat Room!</title>
 
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
-	<script src="/js/script.js"></script>
+	<script src="/js/script.js" type="module"></script>
 </head>
 <body>
+	<article id="usr-msg" hidden>
+		<header>[empty]</header>
+		<main>[empty]</main>
+	</article>
 	
+	<header>
+		<h2>Chat Room!</h2>
+	</header>
+	<main>
+		<div id="msg-container"></div>
+		<form id="input-form" action="/send" method="POST">
+			<textarea id="msg-input" name="msg"></textarea>
+			<div id="buttons-container">
+				<input type="reset" value="clear">
+				<input type="submit" value="send">
+			</div>
+		</form>
+	</main>
 </body>
 </html>
