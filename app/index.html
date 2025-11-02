@@ -6,6 +6,11 @@
 	<title>Chat Room!</title>
 
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	<script>
+		if(!localStorage.getItem("tos-accept")) {
+			location.href = "/tos.html";
+		}
+	</script>
 	<script src="/js/script.js" type="module"></script>
 </head>
 <body>
@@ -15,7 +20,7 @@
 	</article>
 	
 	<header>
-		<h2>Chat Room!</h2>
+		<h2>Andrew's Chat Room!</h2>
 	</header>
 	<main>
 		<div id="msg-container"></div>
