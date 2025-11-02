@@ -1,53 +1,67 @@
-<div id="tos">
-<h1>Terms of Service</h1>
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Terms of Service</title>
 
-<h2>1. Acceptance of Terms</h2>
-<p>By using this chat service (the "Service"), you agree to be bound by these Terms of Service. If you do not agree, do not use the Service.</p>
+	<link rel="stylesheet" type="text/css" href="/css/global.css">
+	<script src="/js/tos.js" type="module"></script>
+</head>
+<body>
+	<div>
+		<h1>Terms of Service</h1>
+		<br>
 
-<h2>2. Description of Service</h2>
-<p>This Service allows users to send and receive text messages in real-time. This is a student project created for educational purposes.</p>
+		<h2>1. Acceptance of Terms</h2>
+		<p>By using this chat service (the "Service"), you agree to be bound by these Terms of Service. If you do not agree, do not use the Service.</p>
+		<br>
 
-<h2>3. Data Collection</h2>
-<p>The only data collected by the Service is the text content of messages you send. No personal information, usernames, or identifying data is stored beyond what you voluntarily provide in your messages.</p>
+		<h2>2. Description of Service</h2>
+		<p>This Service allows users to send and receive text messages in real-time. This is a student project created for educational purposes.</p>
+		<br>
 
-<h2>4. School Review and Monitoring</h2>
-<p><strong>IMPORTANT:</strong> All messages sent through this Service are subject to review and monitoring by school authorities. There is no expectation of privacy. Messages may be reviewed for compliance with school policies and applicable laws.</p>
+		<h2>3. Data Collection</h2>
+		<p>The only data collected by the Service is the text content of messages you send. No personal information, usernames, or identifying data is stored beyond what you voluntarily provide in your messages.</p>
+		<br>
 
-<h2>5. Acceptable Use</h2>
-<p>You agree not to use the Service to:</p>
-<ul>
-  <li>Post illegal, harmful, threatening, abusive, or offensive content</li>
-  <li>Harass or harm other users</li>
-  <li>Spam or flood the chat with repetitive messages</li>
-  <li>Impersonate others or misrepresent your identity</li>
-  <li>Share private information about others without consent</li>
-  <li>Violate any school policies or rules</li>
-</ul>
+		<h2>4. School Review and Monitoring</h2>
+		<p><strong>IMPORTANT:</strong> All messages sent through this Service are subject to review and monitoring by school authorities. There is no expectation of privacy. Messages may be reviewed for compliance with school policies and applicable laws.</p>
+		<br>
 
-<h2>6. No Warranty</h2>
-<p>This Service is provided "as is" without any warranties. This is a student project and may contain bugs, experience downtime, or lose data without notice.</p>
+		<h2>5. Acceptable Use</h2>
+		<p>You agree not to use the Service to:</p>
+		<ul>
+			<li>Post illegal, harmful, threatening, abusive, or offensive content</li>
+			<li>Harass or harm other users</li>
+			<li>Spam or flood the chat with repetitive messages</li>
+			<li>Impersonate others or misrepresent your identity</li>
+			<li>Share private information about others without consent</li>
+			<li>Violate any school policies or rules</li>
+		</ul>
+		<br>
 
-<h2>7. Limitation of Liability</h2>
-<p>The creator of this Service is not responsible for any damages, data loss, or issues arising from your use of the Service.</p>
+		<h2>6. No Warranty</h2>
+		<p>This Service is provided "as is" without any warranties. This is a student project and may contain bugs, experience downtime, or lose data without notice.</p>
+		<br>
+		
+		<h2>7. Limitation of Liability</h2>
+		<p>The creator of this Service is not responsible for any damages, data loss, or issues arising from your use of the Service.</p>
+		<br>
 
-<h2>8. Content Responsibility</h2>
-<p>You are solely responsible for the content you post. The Service operator reserves the right to remove any content or terminate access for violations of these terms.</p>
+		<h2>8. Content Responsibility</h2>
+		<p>You are solely responsible for the content you post. The Service operator reserves the right to remove any content or terminate access for violations of these terms.</p>
+		<br>
 
-<h2>9. Changes to Terms</h2>
-<p>These terms may be updated at any time. Continued use of the Service constitutes acceptance of any changes.</p>
+		<h2>9. Changes to Terms</h2>
+		<p>These terms may be updated at any time. Continued use of the Service constitutes acceptance of any changes.</p>
+		<br>
 
-<p><strong>Last Updated:</strong> November 2, 2024</p>
-</div>
-
-<form id="tos-form" action="/" method="GET">
-	<input type="submit" value="Accept">
-</form>
-
-<script>
-	const form = document.getElementById("tos-form");
-	form.onsubmit = e => {
-		e.preventDefault();
-		localStorage.setItem("tos-accept", "true");
-		location.href = "/";
-	}
-</script>
+		<p><strong>Last Updated:</strong> November 2, 2024</p>
+		<br>
+	</div>
+	<form id="tos-form" action="/" method="GET">
+		<input type="submit" value="Accept Terms Of Service">
+	</form>
+</body>
+</html>

@@ -1,6 +1,6 @@
 const $query = x => document.querySelector(x);
-const $all = x => [...document.querySelectorAll(x)];
 
+const InputText = $query("#input-form textarea");
 const MessageTemplate = $query("#usr-msg");
 
 function createMessage(username, text) {
@@ -23,7 +23,8 @@ const MessageArray = {
 
 $query("#input-form").addEventListener("submit", async function(e) {
   e.preventDefault();
-  const messageText = this.querySelector("textarea").value;
-  const message = createMessage("test", messageText);
+
+  const message = createMessage("test", InputText.value);
   MessageArray.append(message);
+  InputText.value = "";
 });
