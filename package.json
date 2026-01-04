@@ -1,0 +1,28 @@
+{
+  "name": "senior-project",
+  "version": "1.0.0",
+  "description": "My CHS Senior Year Project.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "ncc build src/server.js -o dist",
+    "clean": "rm -f dist/index.js",
+    "start": "node dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrewfeasel/senior-project.git"
+  },
+  "keywords": [
+    "chatroom"
+  ],
+  "author": "Andrew Feasel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrewfeasel/senior-project/issues"
+  },
+  "homepage": "https://github.com/andrewfeasel/senior-project#readme",
+  "dependencies": {
+    "express": "^5.2.1",
+    "sqlite3": "^5.1.7"
+  }
+}

@@ -1,3 +1,5 @@
-./server
-target
-database.db
+dist/index.js
+dist/database.db
+node_modules
+package.json
+package-lock.json
