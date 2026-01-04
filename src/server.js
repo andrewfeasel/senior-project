@@ -1,7 +1,16 @@
+'use strict';
 const express = require("express");
 const sql = require("sqlite3").verbose();
 const path = require("node:path");
-const http = require("node:http");
+
+/* uses djb2 */
+function createHash(str) {
+  let hash = 5381;
+  for (let i = 0; i < str.length; i++) {
+    hash = ((hash << 5) + hash) + str.charCodeAt(i);
+  }
+  return hash;
+}
 
 const config = require("./config.json");
 
@@ -16,21 +25,26 @@ const chats = [];
 const server = express();
 
 server.get("/chats", (req, res) => {
+	res.status(200);
+	res.set("Content-Type", "application/json");
 	res.json(chats);
-	res.end();
 });
 
-server.use(express.json(config.express_json_settings));
+
+server.use(express.json(config.express.json));
 server.post("/chats", (req, res) => {
-	db.run("INSERT INTO chats(ip_addr, message) VALUES (?, ?)", [req.socket.remoteAddress, req.body], (error) => {
+	db.run("INSERT INTO chats(ip_addr, message) VALUES (?, ?)", [req.socket.remoteAddress, req.body.message], (error) => {
 		if (error) console.error(error);
+		const recv_message = {message: req.body.message, hash: createHash(req.socket.remoteAddress)}
+		chats.push(recv_message);
+		if (chats.length > config.chat_limit) {
+			chats.shift();
+		}
+		res.sendStatus(201);
 	});
-	chats.push(req.body);
-	if (chats.length > config.chat_limit)
-		chats.unshift();
 });
 
 const file_path = path.join(__dirname, config.app_path);
 server.use(express.static(file_path));
 
-server.listen(config.port, () => console.log(`server listening; port ${config.port}`));
+server.listen(config.port, () => console.log(`server listening on port ${config.port}`));

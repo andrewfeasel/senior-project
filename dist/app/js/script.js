@@ -21,10 +21,29 @@ const MessageArray = {
   }
 }
 
-$query("#input-form").addEventListener("submit", async function(e) {
+const inputForm = $query("#input-form");
+inputForm.addEventListener("submit", async function(e) {
   e.preventDefault();
-
-  const message = createMessage("test", InputText.value);
-  MessageArray.append(message);
-  InputText.value = "";
+  fetch(inputForm.action, {
+    method: "POST",
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({message: InputText.value})
+  }).then(() => {
+    InputText.value = "";
+  });
 });
+
+let lastMessageIndex = 0;
+
+setInterval(() => {
+  fetch("/chats")
+  .then(res => res.json())
+  .then(messages => {
+    const newMessages = messages.slice(lastMessageIndex);
+    for(const {message, hash} of newMessages) {
+      const recv_message = createMessage(hash.toString(16), message);
+      MessageArray.append(recv_message);
+    }
+    lastMessageIndex = messages.length;
+  })
+}, 2000);

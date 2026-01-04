@@ -21730,7 +21730,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"100":"Continue","101":"Switching Pro
 /***/ ((module) => {
 
 "use strict";
-module.exports = /*#__PURE__*/JSON.parse('{"db_path":"./database.db","app_path":"./app","port":8080,"chat_limit":256,"express_json_settings":{"limit":"4kb"}}');
+module.exports = /*#__PURE__*/JSON.parse('{"db_path":"database.db","app_path":"app","port":8080,"chat_limit":256,"express":{"json":{"limit":"4kb"}}}');
 
 /***/ })
 
@@ -21785,10 +21785,22 @@ module.exports = /*#__PURE__*/JSON.parse('{"db_path":"./database.db","app_path":
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+(() => {
+"use strict";
+
 const express = __nccwpck_require__(1836);
 const sql = (__nccwpck_require__(2028).verbose)();
 const path = __nccwpck_require__(4379);
-const http = __nccwpck_require__(7067);
+
+/* uses djb2 */
+function createHash(str) {
+  let hash = 5381;
+  for (let i = 0; i < str.length; i++) {
+    hash = ((hash << 5) + hash) + str.charCodeAt(i);
+  }
+  return hash;
+}
 
 const config = __nccwpck_require__(1219);
 
@@ -21803,24 +21815,32 @@ const chats = [];
 const server = express();
 
 server.get("/chats", (req, res) => {
+	console.log(chats);
+	res.status(200);
+	res.set("Content-Type", "application/json");
 	res.json(chats);
-	res.end();
 });
 
-server.use(express.json(config.express_json_settings));
+
+server.use(express.json(config.express.json));
 server.post("/chats", (req, res) => {
-	db.run("INSERT INTO chats(ip_addr, message) VALUES (?, ?)", [req.socket.remoteAddress, req.body], (error) => {
+	db.run("INSERT INTO chats(ip_addr, message) VALUES (?, ?)", [req.socket.remoteAddress, req.body.message], (error) => {
 		if (error) console.error(error);
+		const recv_message = {message: req.body.message, hash: createHash(req.socket.remoteAddress)}
+		chats.push(recv_message);
+		if (chats.length > config.chat_limit) {
+			chats.shift();
+		}
+		res.sendStatus(201);
 	});
-	chats.push(req.body);
-	if (chats.length > config.chat_limit)
-		chats.unshift();
 });
 
 const file_path = path.join(__dirname, config.app_path);
 server.use(express.static(file_path));
 
-server.listen(config.port, () => console.log(`server listening; port ${config.port}`));
+server.listen(config.port, () => console.log(`server listening on port ${config.port}`));
+})();
+
 module.exports = __webpack_exports__;
 /******/ })()
 ;

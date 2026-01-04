@@ -3,7 +3,9 @@
 	"app_path": "app",
 	"port": 8080,
 	"chat_limit": 256,
-	"express_json_settings": {
-		"limit": "4kb"
+	"express": {
+		"json": {
+			"limit": "4kb"
+		}
 	}
 }
