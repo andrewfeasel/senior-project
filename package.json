@@ -4,7 +4,8 @@
   "description": "My CHS Senior Year Project.",
   "main": "dist/index.js",
   "scripts": {
-    "build": "ncc build src/server.js -o dist",
+    "build-prod": "ncc build src/server.js -o dist --minify",
+    "build-dev": "ncc build src/server.js -o dist",
     "clean": "rm -f dist/index.js",
     "start": "node dist/index.js"
   },
