@@ -19,7 +19,7 @@ const db = new sql.Database(config.db_path, (error) => {
 	console.log("sqlite3 connect ok");
 });
 
-db.run("CREATE TABLE IF NOT EXISTS chats (ip_addr VARCHAR(64) NOT NULL, message TEXT)");
+db.run("CREATE TABLE IF NOT EXISTS chats (ip_addr VARCHAR(48) NOT NULL, username VARCHAR(16) NOT NULL, message TEXT)");
 
 const chats = [];
 const server = express();
@@ -33,9 +33,14 @@ server.get("/chats", (req, res) => {
 
 server.use(express.json(config.express.json));
 server.post("/chats", (req, res) => {
-	db.run("INSERT INTO chats(ip_addr, message) VALUES (?, ?)", [req.socket.remoteAddress, req.body.message], (error) => {
+	db.run("INSERT INTO chats(ip_addr, username, message) VALUES (?, ?, ?)",
+	[req.socket.remoteAddress, req.body.username, req.body.message], (error) => {
 		if (error) console.error(error);
-		const recv_message = {message: req.body.message, hash: createHash(req.socket.remoteAddress)}
+		const recv_message = {
+			message: req.body.message,
+			username: req.body.username,
+			hash: createHash(req.socket.remoteAddress)
+		};
 		chats.push(recv_message);
 		if (chats.length > config.chat_limit) {
 			chats.shift();

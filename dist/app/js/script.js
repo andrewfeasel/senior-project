@@ -27,7 +27,7 @@ inputForm.addEventListener("submit", async function(e) {
   fetch(inputForm.action, {
     method: "POST",
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({message: InputText.value})
+    body: JSON.stringify({username: localStorage.getItem("username"), message: InputText.value})
   }).then(() => {
     InputText.value = "";
   });
@@ -40,8 +40,8 @@ setInterval(() => {
   .then(res => res.json())
   .then(messages => {
     const newMessages = messages.slice(lastMessageIndex);
-    for(const {message, hash} of newMessages) {
-      const recv_message = createMessage(hash.toString(16), message);
+    for(const {message, hash, username} of newMessages) {
+      const recv_message = createMessage(`${hash.toString(16)}-${username}`, message);
       MessageArray.append(recv_message);
     }
     lastMessageIndex = messages.length;

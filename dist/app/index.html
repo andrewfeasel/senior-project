@@ -9,8 +9,14 @@
 	<link rel="stylesheet" type="text/css" href="/css/index.css">
 
 	<script>
-		if(!localStorage.getItem("tos-accept")) {
+		if(!localStorage.getItem("tos-accept"))
 			location.href = "/tos.html";
+		if(!localStorage.getItem("username")) {
+			let username;
+			do { 
+				username = prompt("Enter a nice username (less than 16 characters):");
+			} while (username.length > 16);
+			localStorage.setItem("username", username);
 		}
 	</script>
 	<script src="/js/script.js" type="module"></script>
