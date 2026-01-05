@@ -1,3 +1,5 @@
+import config from "/js/config.json" with {type: "json"};
+
 const $query = x => document.querySelector(x);
 
 const InputText = $query("#input-form textarea");
@@ -24,7 +26,7 @@ const MessageArray = {
 const inputForm = $query("#input-form");
 inputForm.addEventListener("submit", async function(e) {
   e.preventDefault();
-  fetch(inputForm.action, {
+  fetch(config.chat_path, {
     method: "POST",
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({username: localStorage.getItem("username"), message: InputText.value})
@@ -46,4 +48,4 @@ setInterval(() => {
     }
     lastMessageIndex = messages.length;
   })
-}, 2000);
+}, config.poll_ms);
