@@ -1,6 +1,6 @@
 dist/index.js
-dist/database.db
+dist/db
+dist/build
 node_modules
 package.json
 package-lock.json
-database.db

@@ -23,7 +23,8 @@
   },
   "homepage": "https://github.com/andrewfeasel/senior-project#readme",
   "dependencies": {
+    "better-sqlite3": "^12.5.0",
     "express": "^5.2.1",
-    "sqlite3": "^5.1.7"
+    "mustache": "^4.2.0"
   }
 }

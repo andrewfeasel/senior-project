@@ -1,11 +1,13 @@
 {
-	"db_path": "database.db",
+	"db_path": "db/database.db",
 	"app_path": "app",
+	"template_path": "chat.mustache",
 	"port": 8080,
 	"chat_limit": 256,
 	"express": {
-		"json": {
-			"limit": "4kb"
+		"urlencode": {
+			"extended": false,
+			"limit": "1kb"
 		}
 	}
 }

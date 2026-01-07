@@ -1,4 +1,4 @@
-<!doctype html>
+'<!doctype html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -8,6 +8,7 @@
 	<link rel="stylesheet" type="text/css" href="/css/global.css">
 	<link rel="stylesheet" type="text/css" href="/css/index.css">
 
+	<script src="js/htmx.min.js"></script>
 	<script>
 		if(!localStorage.getItem("tos-accept"))
 			location.href = "/tos.html";
@@ -18,22 +19,21 @@
 			} while (username.length > 16);
 			localStorage.setItem("username", username);
 		}
+		document.onready = function(e) {
+			document.getElementById("username-field").value = localStorage.getItem("username");
+		}
 	</script>
-	<script src="/js/script.js" type="module"></script>
 </head>
+
 <body>
-	<article id="usr-msg" hidden>
-		<header>[empty]</header>
-		<main>[empty]</main>
-	</article>
-	
 	<header>
 		<h2>Andrew's Chat Room!</h2>
 	</header>
 	<main>
-		<div id="msg-container"></div>
-		<form id="input-form" action="/chats" method="POST">
-			<textarea id="msg-input" name="msg"></textarea>
+		<div id="msg-container" hx-get="/chats" hx-trigger="every 2s"></div>
+		<form id="input-form" hx-post="/chats" hx-swap="none">
+			<textarea id="msg-input" name="message"></textarea>
+			<input type="hidden" name="username" id="username-field">
 			<div id="buttons-container">
 				<input type="reset" value="clear">
 				<input type="submit" value="send">
