@@ -13,14 +13,14 @@
 		if(!localStorage.getItem("tos-accept"))
 			location.href = "/tos.html";
 		if(!localStorage.getItem("username")) {
-			let username;
+			var username;
 			do { 
 				username = prompt("Enter a nice username (less than 16 characters):");
 			} while (username.length > 16);
 			localStorage.setItem("username", username);
 		}
 		document.onready = function(e) {
-			document.getElementById("username-field").value = localStorage.getItem("username");
+			document["msg-form"].username.value = localStorage.getItem("username");
 		}
 	</script>
 </head>
@@ -31,7 +31,7 @@
 	</header>
 	<main>
 		<div id="msg-container" hx-get="/chats" hx-trigger="every 2s"></div>
-		<form id="input-form" hx-post="/chats" hx-swap="none">
+		<form name="msg-form" id="input-form" hx-post="/chats" hx-swap="none" action="/chats" method="POST">
 			<textarea id="msg-input" name="message"></textarea>
 			<input type="hidden" name="username" id="username-field">
 			<div id="buttons-container">
