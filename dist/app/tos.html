@@ -6,7 +6,6 @@
 	<title>Terms of Service</title>
 
 	<link rel="stylesheet" type="text/css" href="/css/global.css">
-	<script src="/js/tos.js" type="module"></script>
 </head>
 <body>
 	<div>
@@ -60,8 +59,10 @@
 		<p><strong>Last Updated:</strong> November 2, 2024</p>
 		<br>
 	</div>
-	<form id="tos-form" action="/" method="GET">
-		<input type="submit" value="Accept Terms Of Service">
+	<form name="tos_form" action="/" method="POST">
+		<label for="username">username: </label>
+		<input type="text" id="username" name="username" maxlength="16" required><br>
+		<input type="submit" value="Accept TOS">
 	</form>
 </body>
 </html>

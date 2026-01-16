@@ -1,4 +1,4 @@
-'<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -9,20 +9,6 @@
 	<link rel="stylesheet" type="text/css" href="/css/index.css">
 
 	<script src="js/htmx.min.js"></script>
-	<script>
-		if(!localStorage.getItem("tos-accept"))
-			location.href = "/tos.html";
-		if(!localStorage.getItem("username")) {
-			var username;
-			do { 
-				username = prompt("Enter a nice username (less than 16 characters):");
-			} while (username.length > 16);
-			localStorage.setItem("username", username);
-		}
-		document.onready = function(e) {
-			document["msg-form"].username.value = localStorage.getItem("username");
-		}
-	</script>
 </head>
 
 <body>
@@ -31,9 +17,12 @@
 	</header>
 	<main>
 		<div id="msg-container" hx-get="/chats" hx-trigger="every 2s"></div>
-		<form name="msg-form" id="input-form" hx-post="/chats" hx-swap="none" action="/chats" method="POST">
-			<textarea id="msg-input" name="message"></textarea>
-			<input type="hidden" name="username" id="username-field">
+		<noscript>
+			<p>looks like you ain't using js. fair.</p><br>
+			<a href="/chats">View chats</a>
+		</noscript>
+		<form id="input-form" hx-post="/chats" hx-swap="none" action="/chats" method="POST">
+			<textarea id="msg-input" name="message" maxlength="800"></textarea>
 			<div id="buttons-container">
 				<input type="reset" value="clear">
 				<input type="submit" value="send">

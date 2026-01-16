@@ -24,6 +24,7 @@
   "homepage": "https://github.com/andrewfeasel/senior-project#readme",
   "dependencies": {
     "better-sqlite3": "^12.5.0",
+    "cookie-parser": "^1.4.7",
     "express": "^5.2.1",
     "mustache": "^4.2.0"
   }

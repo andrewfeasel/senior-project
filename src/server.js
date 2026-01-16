@@ -1,6 +1,7 @@
 'use strict';
 
 const express = require("express");
+const cookieParser = require("cookie-parser");
 const Database = require("better-sqlite3");
 const Mustache = require("mustache");
 const path = require("node:path");
@@ -16,6 +17,13 @@ function createHash(str) {
   return hash;
 }
 
+function cookieCheck(req, res) {
+	const hasUsernameCookie = typeof req.cookies.username !== "undefined";
+	if (!hasUsernameCookie)
+		res.redirect(303, "/tos.html");
+	return hasUsernameCookie;
+}
+
 /* SERVER INIT */
 process.chdir("dist");
 
@@ -29,27 +37,49 @@ db.exec("CREATE TABLE IF NOT EXISTS chats (ip_addr VARCHAR(48) NOT NULL, usernam
 const db_insert = db.prepare("INSERT INTO chats (ip_addr, username, message) VALUES (?, ?, ?)");
 
 const chats = [];
+
 const server = express();
+server.use(express.urlencoded(config.express.urlencode));
+server.use(cookieParser());
 
 /* REQUEST HANDLING */
 server.get("/chats", (req, res) => {
+	if(!cookieCheck(req, res)) return;
 	res.status(200);
 	res.set("Content-Type", "text/html");
 	res.send(chats.join(''));
 });
 
 
-server.use(express.urlencoded(config.express.urlencode));
+server.post("/", (req, res) => {
+	console.log("POST / hit");
+	console.log("Content-Type:", req.headers['content-type']);
+	console.log("req.body:", req.body);
+	if(typeof req.body.username === "undefined") {
+		res.redirect(400, "/tos.html");
+		return;
+	}
+
+	res.status(201);
+	res.cookie("username", req.body.username, {
+		httpOnly: true,
+		expires: new Date(Date.now() + (1000 * 60 * 60 * 24 * 400))
+	});
+
+	res.redirect(303, "/");
+});
+
 server.post("/chats", (req, res) => {
-	db_insert.run(req.socket.remoteAddress, req.body.username, req.body.message);
+	if(!cookieCheck(req, res)) return;
+	db_insert.run(req.socket.remoteAddress, req.cookies.username, req.body.message);
 	try {
 		const chat_html = Mustache.render(chat_template, {
 			hash: createHash(req.socket.remoteAddress),
-			username: req.body.username,
+			username: req.cookies.username,
 			message: req.body.message
 		});
 		chats.push(chat_html);
-		res.sendStatus(201);
+		res.redirect(303, "/");
 	} catch(e) {
 		console.error(e);
 		res.sendStatus(418);
